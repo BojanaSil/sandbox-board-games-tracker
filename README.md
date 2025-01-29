@@ -35,3 +35,21 @@ Use cases for this project:
 
 12. Get game report
     User can see game report by inputing filter for date interval, category of game etc, and output will be a list of games with number of plays, who was winner most of the time etc...
+
+
+External System:
+- BoardGamesGeek API is used to retrieve board games from their database by inputing a few characters in Name field and selecting one. API: https://boardgamegeek.com
+
+System Architecture Style - Frontend + Monolithic Backend
+
+Tech Stack:
+- .NET 8
+- EF Core 8
+- Angular 15
+- SQL Server
+
+Repository Strategy - Mono-Repo approach
+
+Branching Strategy - Feature branching
+
+Deployment Model - Local only
