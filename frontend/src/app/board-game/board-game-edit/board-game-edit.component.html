@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>{{ data ? 'Edit Entity' : 'Create Entity' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectResult($event.option.value)">
+        <mat-option *ngFor="let result of results" [value]="result">
+          {{ result }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Release date</mat-label>
+      <textarea matInput formControlName="releaseDate"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Min number of players</mat-label>
+      <textarea matInput formControlName="minNumberOfPlayers"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Max number of players</mat-label>
+      <textarea matInput formControlName="maxNumberOfPlayers"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Minimum age</mat-label>
+      <textarea matInput formControlName="minimumAge"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Difficulty</mat-label>
+      <textarea matInput formControlName="difficulty"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Average playing time in minutes</mat-label>
+      <textarea matInput formControlName="averagePlayingTimeInMinutes"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Categories</mat-label>
+      <textarea matInput formControlName="categories"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button color="primary" (click)="onSave()">Save</button>
+</mat-dialog-actions>
