@@ -69,3 +69,7 @@ Use cases for this project:
 
 ## Deployment Model 
   Local only
+
+## Project Board
+[Project Board](https://github.com/users/BojanaSil/projects/1)
+
