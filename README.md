@@ -60,6 +60,7 @@ Use cases for this project:
 - EF Core 8
 - Angular 15
 - SQL Server
+- Playwright
 
 ## Repository Strategy 
   Mono-Repo approach
