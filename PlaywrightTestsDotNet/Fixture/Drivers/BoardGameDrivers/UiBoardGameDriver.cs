@@ -16,7 +16,6 @@ public class UiBoardGameDriver : IBoardGameDriver
     private BoardGameEditPage _boardGameEditPage;
     private HomePage _homePage;
 
-
     public async Task VisitPage()
     {
         await _homePage.OpenPage();

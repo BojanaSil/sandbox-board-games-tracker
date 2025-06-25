@@ -147,6 +147,14 @@ public class BoardGameController : ControllerBase
             .ToListAsync();
         return boardGames;
     }
+    
+    [HttpGet("query")]
+    public async Task<ActionResult<IEnumerable<BoardGame>>> QueryBoardGames(string name)
+    {
+        var boardGames = await _dbContext.BoardGames.Where(e => e.Name.ToLower().Contains(name.ToLower()))
+            .ToListAsync();
+        return boardGames;
+    }
 
     [HttpGet("getBggBoardGames")]
     public async Task<List<string>> GetBggBoardGames(string name)
@@ -155,6 +163,8 @@ public class BoardGameController : ControllerBase
         {
             Method = HttpMethod.Get,
             RequestUri = new Uri($"https://boardgamegeek.com/search/boardgame?q={name}&nosession=1&showcount=10")
+            //RequestUri = new Uri("http://localhost:5009/data") 
+            // TODO: This Uri would be set through variable group in pipeline, depending on type of tests
         };
         httpRequestMessage.Headers.Add("Accept", "application/json");
 

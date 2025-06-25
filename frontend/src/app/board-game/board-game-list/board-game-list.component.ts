@@ -63,6 +63,9 @@ export class BoardGameListComponent {
   }
 
   delete(id: string) {
-    this.boardGameService.deleteBoardGame(id);
+    this.boardGameService.deleteBoardGame(id).subscribe((result) => {
+      if (result)
+        this.ngOnInit();
+    });
   }
 }

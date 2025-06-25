@@ -9,12 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class BoardGameService {
   constructor(private http: HttpClient) {}
-  // private boardGames = new BehaviorSubject<BoardGame[]>([
-  //   { id: '1', name: 'Entity 1' },
-  //   { id: '2', name: 'Entity 2' },
-  // ]);
-
-  // entities$ = this.boardGames.asObservable();
 
   addBoardGame(boardGame: BoardGame): Observable<object> {
     return this.http.post('https://localhost:7212/api/BoardGame', boardGame);
@@ -28,7 +22,8 @@ export class BoardGameService {
   }
 
   deleteBoardGame(id: string): Observable<object> {
-    return this.http.delete(`https://localhost:7212/api/BoardGame/${id}`);
+    let url = `https://localhost:7212/api/BoardGame/${id}`;
+    return this.http.delete(url);
   }
 
   getBoardGame(id: string): Observable<BoardGame> {
@@ -37,6 +32,10 @@ export class BoardGameService {
 
   getBoardGames(): Observable<BoardGame[]>{
     return this.http.get<BoardGame[]>('https://localhost:7212/api/BoardGame');
+  }
+
+  queryBoardGames(name: string): Observable<BoardGame[]>{
+    return this.http.get<BoardGame[]>(`https://localhost:7212/api/BoardGame/query?name=${name}`);
   }
 
   getBggBoardGames(name: string): Observable<string[]>{

@@ -1,0 +1,47 @@
+<div class="table-container">
+  <button mat-raised-button color="primary" (click)="create()">Create</button>
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="gameName">
+      <mat-header-cell *matHeaderCellDef> Game name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.boardGameName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateOfPlay">
+      <mat-header-cell *matHeaderCellDef> Date of play </mat-header-cell>
+      <mat-cell id="dateOfPlay" *matCellDef="let element"> {{element.dateOfPlay}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="timesPlayed">
+      <mat-header-cell *matHeaderCellDef> Number of times played </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.timesPlayed}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="numberOfPlayers">
+      <mat-header-cell *matHeaderCellDef> Number of players </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.numberOfPlayers}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="winner">
+      <mat-header-cell *matHeaderCellDef> Winner </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.winner}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="averageDuration">
+      <mat-header-cell *matHeaderCellDef> Average duration </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.averageDuration}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button color="accent" (click)="edit(element)">Edit</button>
+        <button mat-button color="warn" (click)="delete(element.id)">
+          Delete
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

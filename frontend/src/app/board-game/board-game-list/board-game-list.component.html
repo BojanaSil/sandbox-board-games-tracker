@@ -8,7 +8,7 @@
 
     <ng-container matColumnDef="releaseDate">
       <mat-header-cell *matHeaderCellDef> Release date </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.releaseDate}} </mat-cell>
+      <mat-cell id="releaseDate" *matCellDef="let element"> {{element.releaseDate}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="averagePlayingTimeInMinutes">

@@ -27,4 +27,14 @@ public class OpenPageTest : TestFixture
 
         await _homePage.AssertTitleMatches("BoardGameTracker");
     }
+
+    [Fact]
+    public async Task HasButtons()
+    {
+        await _homePage.OpenPage();
+
+        await _homePage.AssertButtonExists("Board games");
+        await _homePage.AssertButtonExists("Game logs");
+        await _homePage.AssertButtonExists("Home");
+    }
 } 

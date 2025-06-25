@@ -27,6 +27,7 @@ public class BoardGame
     public decimal Difficulty { get; set; }
 
     public List<BoardGameCategory> BoardGameCategories { get; set; }
+    public List<GameLog> GameLogs { get; set; }
 
-    public string Categories => string.Join(",", BoardGameCategories.Select(e => e.Category.Name));
+    public string Categories => BoardGameCategories != null ? string.Join(",", BoardGameCategories.Select(e => e.Category.Name)) : null;
 }

@@ -15,6 +15,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatMenuModule } from '@angular/material/menu';
+import { GameLogEditComponent } from './game-log/game-log-edit/game-log-edit.component';
+import { GameLogListComponent } from './game-log/game-log-list/game-log-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MenuComponent,
     BoardGameListComponent,
     BoardGameEditComponent,
+    GameLogEditComponent,
+    GameLogListComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +43,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     HttpClientModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],
