@@ -3,6 +3,7 @@ using PlaywrightTestsDotNet.Fixture.Drivers.BoardGameDrivers;
 
 namespace PlaywrightTestsDotNet.EndToEndTests;
 
+[Collection("E2eBoardGameTests")]
 public class BoardGameTest
 {
     [Theory, MemberData(nameof(Data.Channels), MemberType = typeof(Data))]

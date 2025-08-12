@@ -1,11 +1,8 @@
-
-using BoardGamesTrackerApi;
 using BoardGamesTrackerApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
-namespace GameLogsTrackerApi.Controllers;
+namespace BoardGamesTrackerApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

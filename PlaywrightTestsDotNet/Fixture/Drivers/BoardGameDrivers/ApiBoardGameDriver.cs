@@ -22,7 +22,7 @@ public class ApiBoardGameDriver : IBoardGameDriver
     public Task VisitPage()
     {
         // TODO: Configure this in variable group in pipeline
-        _url = "https://localhost:7212/api/BoardGame";
+        _url = "http://localhost:5001/api/BoardGame";
         
         return Task.CompletedTask;
     }

@@ -11,7 +11,7 @@ public class HealthCheckTest : TestFixture
         _httpClient = new HttpClient();
         
         // TODO: Configure this in variable group in pipeline
-        _url = "https://localhost:7212/api/HealthCheck";
+        _url = "http://localhost:5001/api/HealthCheck";
         
         return Task.CompletedTask;
     }
@@ -19,6 +19,8 @@ public class HealthCheckTest : TestFixture
     [Fact]
     public async Task ApiHealthCheckTest()
     {
+        await Task.Delay(500);
+
         var message = new HttpRequestMessage(HttpMethod.Get, _url + "/api");
         
         var response = await _httpClient.SendAsync(message);
@@ -28,6 +30,8 @@ public class HealthCheckTest : TestFixture
     [Fact]
     public async Task DbHealthCheckTest()
     {
+        await Task.Delay(500);
+
         var message = new HttpRequestMessage(HttpMethod.Get, _url + "/db");
         
         var response = await _httpClient.SendAsync(message);

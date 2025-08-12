@@ -8,37 +8,38 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BoardGameService {
+  private baseUrl: string = "http://localhost:5001/api/BoardGame";
   constructor(private http: HttpClient) {}
 
   addBoardGame(boardGame: BoardGame): Observable<object> {
-    return this.http.post('https://localhost:7212/api/BoardGame', boardGame);
+    return this.http.post(this.baseUrl, boardGame);
   }
 
   updateBoardGame(boardGame: BoardGame): Observable<object> {
     return this.http.put(
-      `https://localhost:7212/api/BoardGame/${boardGame.id}`,
+      `${this.baseUrl}/${boardGame.id}`,
       boardGame
     );
   }
 
   deleteBoardGame(id: string): Observable<object> {
-    let url = `https://localhost:7212/api/BoardGame/${id}`;
+    let url = `${this.baseUrl}/${id}`;
     return this.http.delete(url);
   }
 
   getBoardGame(id: string): Observable<BoardGame> {
-    return this.http.get<BoardGame>(`https://localhost:7212/api/BoardGame/${id}`);
+    return this.http.get<BoardGame>(`${this.baseUrl}/${id}`);
   }
 
   getBoardGames(): Observable<BoardGame[]>{
-    return this.http.get<BoardGame[]>('https://localhost:7212/api/BoardGame');
+    return this.http.get<BoardGame[]>(this.baseUrl);
   }
 
   queryBoardGames(name: string): Observable<BoardGame[]>{
-    return this.http.get<BoardGame[]>(`https://localhost:7212/api/BoardGame/query?name=${name}`);
+    return this.http.get<BoardGame[]>(`${this.baseUrl}/query?name=${name}`);
   }
 
   getBggBoardGames(name: string): Observable<string[]>{
-    return this.http.get<string[]>(`https://localhost:7212/api/BoardGame/getBggBoardGames?name=${name}`)
+    return this.http.get<string[]>(`${this.baseUrl}/getBggBoardGames?name=${name}`)
   }
 }

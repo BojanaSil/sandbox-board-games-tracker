@@ -15,7 +15,7 @@ public class HomePage
     public async Task OpenPage()
     {
         // TODO: Configure this in variable group in pipeline
-        await _page.GotoAsync("http://localhost:4200/home");
+        await _page.GotoAsync("http://localhost:4300/home");
     }
 
     public async Task AssertTitleMatches(string title)

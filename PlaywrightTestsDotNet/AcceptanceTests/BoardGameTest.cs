@@ -3,13 +3,14 @@ using PlaywrightTestsDotNet.Fixture.Drivers.BoardGameDrivers;
 
 namespace PlaywrightTestsDotNet.AcceptanceTests;
 
+[Collection("AcceptanceBoardGameTests")]
 public class BoardGameTest : TestFixture
 {
     [Theory, MemberData(nameof(Data.Channels), MemberType = typeof(Data))]
     public async Task CreateBoardGame(string channel)
     {
         var boardGameDsl = new BoardGameDsl(channel);
-
+ 
         await boardGameDsl.InitializeAsync();
 
         await boardGameDsl.AddNewBoardGame("Everdell", 2020, 1, 4, 10, 2.3m, 60, "Family");

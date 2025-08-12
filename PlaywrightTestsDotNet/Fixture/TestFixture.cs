@@ -9,26 +9,26 @@ public class TestFixture : IAsyncLifetime
 {
     public TestFixture()
     {
-        Server = WireMockServer.Start(new WireMockServerSettings
-        {
-            Port = 5009,
-            StartAdminInterface = true,
-            ReadStaticMappings = false
-        });
-
-        Server.Given(Request.Create().WithPath("/data").UsingGet())
-            .RespondWith(Response.Create()
-                .WithHeader("Content-Type", "application/json")
-                .WithBody("""
-                          {
-                            "items": [
-                              { "name": "Catan", "yearPublished": 1995 },
-                              { "name": "Terraforming Mars", "yearPublished": 2016 },
-                              { "name": "Everdell", "yearPublished": 2018 }
-                            ]
-                          }
-                          """)
-                .WithStatusCode(200));
+        // Server = WireMockServer.Start(new WireMockServerSettings
+        // {
+        //     Port = 5009,
+        //     StartAdminInterface = true,
+        //     ReadStaticMappings = false
+        // });
+        //
+        // Server.Given(Request.Create().WithPath("/data").UsingGet())
+        //     .RespondWith(Response.Create()
+        //         .WithHeader("Content-Type", "application/json")
+        //         .WithBody("""
+        //                   {
+        //                     "items": [
+        //                       { "name": "Catan", "yearPublished": 1995 },
+        //                       { "name": "Terraforming Mars", "yearPublished": 2016 },
+        //                       { "name": "Everdell", "yearPublished": 2018 }
+        //                     ]
+        //                   }
+        //                   """)
+        //         .WithStatusCode(200));
     }
     public WireMockServer Server { get; private set; }
 
@@ -39,8 +39,8 @@ public class TestFixture : IAsyncLifetime
 
     public Task DisposeAsync()
     {
-        Server.Stop();
-        Server.Dispose();
+        // Server.Stop();
+        // Server.Dispose();
         return Task.CompletedTask;
     }
 }
