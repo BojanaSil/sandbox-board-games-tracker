@@ -74,3 +74,6 @@ Use cases for this project:
 ## Project Board
 [Project Board](https://github.com/users/BojanaSil/projects/1)
 
+## Manual testing
+Setup application locally following [this guide](/DOCKER-SETUP-GUIDE.md)
+Manual testing available in [this file](/MANUAL-TESTING-GUIDE.md)
