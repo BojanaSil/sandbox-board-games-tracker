@@ -1,52 +1,25 @@
-version: '3.8'
-
 services:
-  db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
-    environment:
-      SA_PASSWORD: "dockerdbboardgames123!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    volumes:
-      - ./sql:/sql
-    healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "dockerdbboardgames123!", "-Q", "SELECT 1"]
-      interval: 5s
-      retries: 10
-
-  db-init:
-    image: mcr.microsoft.com/mssql-tools
-    depends_on:
-      db:
-        condition: service_healthy
-    entrypoint: >
-      /bin/bash -c "
-      echo 'Waiting for SQL Server to be available...';
-      until /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P dockerdbboardgames123! -Q 'SELECT 1' > /dev/null 2>&1; do
-        sleep 2
-      done;
-      echo 'SQL Server is ready!';
-      /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P dockerdbboardgames123! -Q \"IF DB_ID(N'BoardGameTrackerDb') IS NULL CREATE DATABASE BoardGameTrackerDb\";
-      echo 'Database created or already exists!';
-      "
-
+  # Backend API
   backend:
     build:
       context: ./backend/BoardGamesTrackerApi
+      dockerfile: Dockerfile
     ports:
-      - "5001:5001"
+      - "${BACKEND_PORT:-5001}:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5001
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=BoardGameTrackerDb;User Id=dockeruser;Password=dockerdbboardgames123!;TrustServerCertificate=True;
+      # host.docker.internal allows Docker container to connect to host machine's SQL Server
+      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=BoardGamesDb;User Id=dockeruser;Password=dockerdbboardgames1!;TrustServerCertificate=True;
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Ensures host.docker.internal works on Linux
 
-
+  # Frontend Angular App
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "4300:80" 
-    depends_on:
-      - backend
+      - "${FRONTEND_PORT:-4300}:80"
+    environment:
+      - API_URL=http://backend:5001
