@@ -21,8 +21,7 @@ public class ApiBoardGameDriver : IBoardGameDriver
 
     public Task VisitPage()
     {
-        // TODO: Configure this in variable group in pipeline
-        _url = "http://localhost:5001/api/BoardGame";
+        _url = TestConfiguration.GetApiUrl("BoardGame");
         
         return Task.CompletedTask;
     }

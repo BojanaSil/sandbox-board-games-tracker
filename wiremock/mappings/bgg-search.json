@@ -1,0 +1,26 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/search/boardgame.*"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "items": [
+        { "name": "Catan", "yearPublished": 1995 },
+        { "name": "Terraforming Mars", "yearPublished": 2016 },
+        { "name": "Everdell", "yearPublished": 2018 },
+        { "name": "Wingspan", "yearPublished": 2019 },
+        { "name": "Gloomhaven", "yearPublished": 2017 },
+        { "name": "Pandemic", "yearPublished": 2008 },
+        { "name": "Ticket to Ride", "yearPublished": 2004 },
+        { "name": "Azul", "yearPublished": 2017 },
+        { "name": "Splendor", "yearPublished": 2014 },
+        { "name": "7 Wonders", "yearPublished": 2010 }
+      ]
+    }
+  }
+}

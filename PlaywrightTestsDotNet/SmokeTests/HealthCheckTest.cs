@@ -10,8 +10,7 @@ public class HealthCheckTest : TestFixture
     {
         _httpClient = new HttpClient();
         
-        // TODO: Configure this in variable group in pipeline
-        _url = "http://localhost:5001/api/HealthCheck";
+        _url = TestConfiguration.GetApiUrl("HealthCheck");
         
         return Task.CompletedTask;
     }

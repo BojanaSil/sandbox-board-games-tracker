@@ -1,18 +1,30 @@
 services:
-  # Backend API
+  # WireMock service for mocking external APIs (only for acceptance tests)
+  wiremock:
+    image: wiremock/wiremock:3.3.1
+    profiles: ["e2e", "acceptance"]
+    ports:
+      - "9876:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+    command: --verbose --global-response-templating
+
+  # Single backend API instance - configured via environment variable
   backend:
     build:
       context: ./backend/BoardGamesTrackerApi
       dockerfile: Dockerfile
     ports:
-      - "${BACKEND_PORT:-5001}:5001"
+      - "5001:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5001
-      # host.docker.internal allows Docker container to connect to host machine's SQL Server
       - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=BoardGamesDb;User Id=dockeruser;Password=dockerdbboardgames1!;TrustServerCertificate=True;
+      # BGG URL is configured via environment variable (defaults to real API)
+      - ExternalApis__BoardGameGeekBaseUrl=${BGG_BASE_URL:-https://boardgamegeek.com}
     extra_hosts:
-      - "host.docker.internal:host-gateway"  # Ensures host.docker.internal works on Linux
+      - "host.docker.internal:host-gateway"
+    profiles: ["e2e", "acceptance"]
 
   # Frontend Angular App
   frontend:
@@ -23,3 +35,4 @@ services:
       - "${FRONTEND_PORT:-4300}:80"
     environment:
       - API_URL=http://backend:5001
+    profiles: ["e2e", "acceptance"]

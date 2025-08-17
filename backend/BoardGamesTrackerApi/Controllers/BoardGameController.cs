@@ -12,11 +12,13 @@ public class BoardGameController : ControllerBase
 {
     private readonly DatabaseContext _dbContext;
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
 
-    public BoardGameController(DatabaseContext dbContext, HttpClient httpClient)
+    public BoardGameController(DatabaseContext dbContext, HttpClient httpClient, IConfiguration configuration)
     {
         _dbContext = dbContext;
         _httpClient = httpClient;
+        _configuration = configuration;
     }
 
     [HttpGet("{id}")]
@@ -159,12 +161,12 @@ public class BoardGameController : ControllerBase
     [HttpGet("getBggBoardGames")]
     public async Task<List<string>> GetBggBoardGames(string name)
     {
+        var bggBaseUrl = _configuration["ExternalApis:BoardGameGeekBaseUrl"] ?? "https://boardgamegeek.com";
+        Console.WriteLine("bgg url: " + bggBaseUrl);
         var httpRequestMessage = new HttpRequestMessage
         {
             Method = HttpMethod.Get,
-            RequestUri = new Uri($"https://boardgamegeek.com/search/boardgame?q={name}&nosession=1&showcount=10")
-            //RequestUri = new Uri("http://localhost:5009/data") 
-            // TODO: This Uri would be set through variable group in pipeline, depending on type of tests
+            RequestUri = new Uri($"{bggBaseUrl}/search/boardgame?q={name}&nosession=1&showcount=10")
         };
         httpRequestMessage.Headers.Add("Accept", "application/json");
 
