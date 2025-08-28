@@ -1,7 +1,12 @@
 # PowerShell script for running all tests sequentially
 Write-Host "Running All Tests Sequentially..." -ForegroundColor Green
 
-# Run E2E tests first
+# Run Smoke tests first
+Write-Host "`n========== SMOKE TESTS ==========`n" -ForegroundColor Cyan
+& ./run-smoke-tests.ps1
+$smokeResult = $LASTEXITCODE
+
+# Run E2E tests
 Write-Host "`n========== E2E TESTS ==========`n" -ForegroundColor Cyan
 & ./run-e2e-tests.ps1
 $e2eResult = $LASTEXITCODE
@@ -13,20 +18,26 @@ $acceptanceResult = $LASTEXITCODE
 
 # Summary
 Write-Host "`n========== TEST SUMMARY ==========`n" -ForegroundColor Cyan
-if ($e2eResult -eq 0) {
-    Write-Host "✓ E2E Tests: PASSED" -ForegroundColor Green
+if ($smokeResult -eq 0) {
+    Write-Host "[PASS] Smoke Tests: PASSED" -ForegroundColor Green
 } else {
-    Write-Host "✗ E2E Tests: FAILED" -ForegroundColor Red
+    Write-Host "[FAIL] Smoke Tests: FAILED" -ForegroundColor Red
+}
+
+if ($e2eResult -eq 0) {
+    Write-Host "[PASS] E2E Tests: PASSED" -ForegroundColor Green
+} else {
+    Write-Host "[FAIL] E2E Tests: FAILED" -ForegroundColor Red
 }
 
 if ($acceptanceResult -eq 0) {
-    Write-Host "✓ Acceptance Tests: PASSED" -ForegroundColor Green
+    Write-Host "[PASS] Acceptance Tests: PASSED" -ForegroundColor Green
 } else {
-    Write-Host "✗ Acceptance Tests: FAILED" -ForegroundColor Red
+    Write-Host "[FAIL] Acceptance Tests: FAILED" -ForegroundColor Red
 }
 
 # Exit with failure if any test failed
-if (($e2eResult -ne 0) -or ($acceptanceResult -ne 0)) {
+if (($smokeResult -ne 0) -or ($e2eResult -ne 0) -or ($acceptanceResult -ne 0)) {
     exit 1
 }
 exit 0
