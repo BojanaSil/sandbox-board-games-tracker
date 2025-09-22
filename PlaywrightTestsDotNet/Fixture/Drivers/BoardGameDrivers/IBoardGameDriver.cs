@@ -4,7 +4,7 @@ public interface IBoardGameDriver
 {
     Task InitializeAsync();
     
-    Task VisitPage();
+    Task SetupEntryPoint();
 
     Task CreateBoardGame(string name, int releaseDate, int minNumberOfPlayers, int maxNumberOfPlayers,
         int minimumAge, decimal difficulty, int averagePlayingTime, string categories);

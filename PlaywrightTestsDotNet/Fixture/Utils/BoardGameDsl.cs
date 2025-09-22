@@ -1,4 +1,6 @@
-namespace PlaywrightTestsDotNet.Fixture.Drivers.BoardGameDrivers;
+using PlaywrightTestsDotNet.Fixture.Drivers.BoardGameDrivers;
+
+namespace PlaywrightTestsDotNet.Fixture.Utils;
 
 public class BoardGameDsl
 {
@@ -22,7 +24,7 @@ public class BoardGameDsl
     public async Task AddNewBoardGame(string name, int releaseDate, int minNumberOfPlayers, int maxNumberOfPlayers,
         int minimumAge, decimal difficulty, int averagePlayingTime, string categories)
     {
-        await _boardGameDriver.VisitPage();
+        await _boardGameDriver.SetupEntryPoint();
         await _boardGameDriver.CreateBoardGame(name, releaseDate, minNumberOfPlayers, maxNumberOfPlayers, minimumAge,
             difficulty, averagePlayingTime, categories);
         await _boardGameDriver.SaveBoardGame();
@@ -31,7 +33,7 @@ public class BoardGameDsl
     public async Task UpdateBoardGame(string name, int releaseDate, int minNumberOfPlayers, int maxNumberOfPlayers,
         int minimumAge, decimal difficulty, int averagePlayingTime, string categories)
     {
-        await _boardGameDriver.VisitPage();
+        await _boardGameDriver.SetupEntryPoint();
         await _boardGameDriver.RefreshBoardGames();
         await _boardGameDriver.UpdateBoardGame(name, releaseDate, minNumberOfPlayers, maxNumberOfPlayers, minimumAge,
             difficulty, averagePlayingTime, categories);
@@ -62,7 +64,19 @@ public class BoardGameDsl
     public async Task DeleteBoardGame(string name)
     {
         await _boardGameDriver.RefreshBoardGames();
-        
+
         await _boardGameDriver.DeleteBoardGame(name);
+    }
+
+    public async Task AddBoardGameForDeletion(string name)
+    {
+        await AddNewBoardGame(name, 2020, 1, 4, 10, 2.5m, 60, "Family");
+    }
+
+    public async Task AddBoardGameWithFullDetails(string name, int releaseDate, int minNumberOfPlayers,
+        int maxNumberOfPlayers, int minimumAge, decimal difficulty, int averagePlayingTime, string categories)
+    {
+        await AddNewBoardGame(name, releaseDate, minNumberOfPlayers, maxNumberOfPlayers,
+            minimumAge, difficulty, averagePlayingTime, categories);
     }
 }

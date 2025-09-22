@@ -1,5 +1,6 @@
 using PlaywrightTestsDotNet.Fixture;
 using PlaywrightTestsDotNet.Fixture.Drivers.BoardGameDrivers;
+using PlaywrightTestsDotNet.Fixture.Utils;
 
 namespace PlaywrightTestsDotNet.AcceptanceTests;
 
@@ -9,45 +10,47 @@ public class BoardGameTest : TestFixture
     [Theory, MemberData(nameof(Data.Channels), MemberType = typeof(Data))]
     public async Task CreateBoardGame(string channel)
     {
-        var boardGameDsl = new BoardGameDsl(channel);
- 
-        await boardGameDsl.InitializeAsync();
+        var boardGame = await CreateAndInitializeBoardGame(channel);
 
-        await boardGameDsl.AddNewBoardGame("Everdell", 2020, 1, 4, 10, 2.3m, 60, "Family");
+        await boardGame.AddBoardGameWithFullDetails("Everdell", 2020, 1, 4, 10, 2.3m, 60, "Family");
 
-        await boardGameDsl.AssertBoardGameExists("Everdell");
+        await boardGame.AssertBoardGameExists("Everdell");
 
-        await boardGameDsl.DeleteBoardGame("Everdell");
+        await boardGame.DeleteBoardGame("Everdell");
     }
 
     [Theory, MemberData(nameof(Data.Channels), MemberType = typeof(Data))]
     public async Task UpdateBoardGame(string channel)
     {
-        var boardGameDsl = new BoardGameDsl(channel);
+        var boardGame = await CreateAndInitializeBoardGame(channel);
 
-        await boardGameDsl.InitializeAsync();
+        await boardGame.AddBoardGameWithFullDetails("Everdell", 2020, 1, 4, 10, 2.3m, 60, "Family");
 
-        await boardGameDsl.AddNewBoardGame("Everdell", 2020, 1, 4, 10, 2.3m, 60, "Family");
+        await boardGame.UpdateBoardGame("Everdell", 2055, 2, 5, 12, 2.2m, 75, "Family,Fun");
 
-        await boardGameDsl.UpdateBoardGame("Everdell", 2055, 2, 5, 12, 2.2m, 75, "Family,Fun");
+        await boardGame.AssertBoardGameUpdated("Everdell", 2055);
 
-        await boardGameDsl.AssertBoardGameUpdated("Everdell", 2055);
-        
-        await boardGameDsl.DeleteBoardGame("Everdell");
+        await boardGame.DeleteBoardGame("Everdell");
     }
 
     [Theory, MemberData(nameof(Data.Channels), MemberType = typeof(Data))]
     public async Task DeleteBoardGame(string channel)
     {
-        var boardGameDsl = new BoardGameDsl(channel);
+        var boardGame = await CreateAndInitializeBoardGame(channel);
 
-        await boardGameDsl.InitializeAsync();
+        await boardGame.AddBoardGameForDeletion("Everdell");
 
-        await boardGameDsl.AddNewBoardGame("Everdell", 2020, 1, 4, 10, 2.3m, 60, "Family");
+        await boardGame.DeleteBoardGame("Everdell");
 
-        await boardGameDsl.DeleteBoardGame("Everdell");
+        await boardGame.AssertBoardGameDoesNotExist("Everdell");
+    }
 
-        await boardGameDsl.AssertBoardGameDoesNotExist("Everdell");
+    private static async Task<BoardGameDsl> CreateAndInitializeBoardGame(string channel)
+    {
+        var boardGame = new BoardGameDsl(channel);
+
+        await boardGame.InitializeAsync();
+        return boardGame;
     }
 }
 

@@ -19,7 +19,7 @@ public class ApiBoardGameDriver : IBoardGameDriver
         return Task.CompletedTask;
     }
 
-    public Task VisitPage()
+    public Task SetupEntryPoint()
     {
         _url = TestConfiguration.GetApiUrl("BoardGame");
         
