@@ -1,10 +1,12 @@
 using PlaywrightTestsDotNet.Fixture.Drivers.BoardGameDrivers;
+using PlaywrightTestsDotNet.Fixture.Drivers.GameLogDrivers;
 
 namespace PlaywrightTestsDotNet.Fixture.Utils;
 
 public class BoardGameDsl
 {
     private readonly IBoardGameDriver _boardGameDriver;
+    private readonly IGameLogDriver _gameLogDriver;
     
     public BoardGameDsl(string channel)
     {
@@ -12,6 +14,13 @@ public class BoardGameDsl
         {
             "UI" => new UiBoardGameDriver(),
             "API" => new ApiBoardGameDriver(),
+            _ => throw new NotImplementedException()
+        };
+        
+        _gameLogDriver = channel switch
+        {
+            "UI" => new UiGameLogDriver(),
+            "API" => new ApiGameLogDriver(),
             _ => throw new NotImplementedException()
         };
     }
@@ -78,5 +87,16 @@ public class BoardGameDsl
     {
         await AddNewBoardGame(name, releaseDate, minNumberOfPlayers, maxNumberOfPlayers,
             minimumAge, difficulty, averagePlayingTime, categories);
+    }
+
+    public async Task AssertFieldIsNotEditable(string boardGame, string fieldName)
+    {
+        await _boardGameDriver.RefreshBoardGames();
+        await _boardGameDriver.AssertFieldIsNotEditable(boardGame, fieldName);
+    }
+
+    public async Task CancelUpdate()
+    {
+        await _boardGameDriver.CancelUpdate();
     }
 }

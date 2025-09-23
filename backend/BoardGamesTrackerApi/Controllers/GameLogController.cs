@@ -127,4 +127,24 @@ public class GameLogController : ControllerBase
             Winner = e.Winner
         }));
     }
+
+    [HttpGet("byBoardGame/{boardGameId}")]
+    public async Task<ActionResult<IEnumerable<GameLogDto>>> GetGameLogsByBoardGame(Guid boardGameId)
+    {
+        var gameLogs = await _dbContext.GameLogs
+            .Include(e => e.BoardGame)
+            .Where(e => e.BoardGameId == boardGameId)
+            .ToListAsync();
+
+        return Ok(gameLogs.Select(e => new GameLogDto
+        {
+            Id = e.Id,
+            BoardGameName = e.BoardGame.Name,
+            AverageDuration = e.AverageDuration,
+            DateOfPlay = e.DateOfPlay,
+            NumberOfPlayers = e.NumberOfPlayers,
+            TimesPlayed = e.TimesPlayed,
+            Winner = e.Winner
+        }));
+    }
 }

@@ -2,16 +2,12 @@ using Microsoft.Playwright;
 using PlaywrightTestsDotNet.Fixture.Pages.BoardGames.EditComponent;
 using PlaywrightTestsDotNet.Fixture.Pages.BoardGames.ListComponent;
 using PlaywrightTestsDotNet.Fixture.Pages.Home;
+using PlaywrightTestsDotNet.Fixture.Utils;
 
 namespace PlaywrightTestsDotNet.Fixture.Drivers.BoardGameDrivers;
 
 public class UiBoardGameDriver : IBoardGameDriver
 {
-    private IPlaywright _playwright;
-    private IBrowser _browser;
-    private IBrowserContext _context;
-    private IPage _page;
-    
     private BoardGameListPage _boardGameListPage;
     private BoardGameEditPage _boardGameEditPage;
     private HomePage _homePage;
@@ -43,6 +39,11 @@ public class UiBoardGameDriver : IBoardGameDriver
         await _boardGameEditPage.SaveBoardGame();
     }
 
+    public async Task CancelUpdate()
+    {
+        await _boardGameEditPage.CancelBoardGameUpdate();
+    }
+
     public async Task RefreshBoardGames()
     {
         await _homePage.RefreshBoardGamesPage();
@@ -70,17 +71,19 @@ public class UiBoardGameDriver : IBoardGameDriver
 
     public async Task InitializeAsync()
     {
-        _playwright = await Playwright.CreateAsync();
-        _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false });
-        _context = await _browser.NewContextAsync();
-        _page = await _context.NewPageAsync();
-
-        _homePage = new HomePage(_page);
+        _homePage = await BrowserContextManager.GetOrCreateContextAsync();
     }
 
     public async Task DisposeAsync()
     {
-        await _browser.DisposeAsync();
-        _playwright.Dispose();
+        await BrowserContextManager.DisposeAsync();
+    }
+
+    public async Task AssertFieldIsNotEditable(string boardGame, string fieldName)
+    {
+        _boardGameEditPage = await _boardGameListPage.OpenEditPageForUpdate(boardGame);
+        var locator = _boardGameEditPage.GetTextField(fieldName);
+        await Assertions.Expect(locator).ToBeDisabledAsync();
+        await CancelUpdate();
     }
 }

@@ -113,8 +113,23 @@ public class BoardGameEditPage
         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Categories" }).FillAsync(categories);
     }
 
-    public async Task  SaveBoardGame()
+    public async Task SaveBoardGame()
     {
         await Page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+    }
+    
+    public async Task CancelBoardGameUpdate()
+    {
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Cancel" }).ClickAsync();
+    }
+
+    public ILocator GetTextField(string fieldName)
+    {
+        return Page.GetByRole(AriaRole.Textbox, new() { Name = fieldName });
+    }
+
+    public async Task<bool> IsFieldEditable(string fieldName)
+    {
+        return await Page.GetByRole(AriaRole.Textbox, new() { Name = fieldName }).IsEditableAsync();
     }
 }

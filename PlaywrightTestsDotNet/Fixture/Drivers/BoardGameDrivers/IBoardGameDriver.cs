@@ -14,6 +14,8 @@ public interface IBoardGameDriver
     
     Task SaveBoardGame();
 
+    Task CancelUpdate();
+
     Task RefreshBoardGames();
 
     Task AssertBoardGameUpdated(string name, int releaseDate);
@@ -21,6 +23,8 @@ public interface IBoardGameDriver
     Task AssertBoardGameExists(string text);
     
     Task AssertBoardGameDoesNotExist(string text);
-    
+
     Task DeleteBoardGame(string name);
+
+    Task AssertFieldIsNotEditable(string boardGame, string fieldName);
 }

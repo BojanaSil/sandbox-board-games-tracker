@@ -1,5 +1,6 @@
 using Microsoft.Playwright;
 using PlaywrightTestsDotNet.Fixture.Pages.BoardGames.ListComponent;
+using PlaywrightTestsDotNet.Fixture.Pages.GameLogs.ListComponent;
 
 namespace PlaywrightTestsDotNet.Fixture.Pages.Home;
 
@@ -32,6 +33,12 @@ public class HomePage
         await _page.GetByRole(AriaRole.Button, new() { Name = "Board games" }).ClickAsync();
         return new BoardGameListPage(_page);
     }
+
+    public async Task<GameLogListPage> ClickGameLogsButton()
+    {
+        await _page.GetByRole(AriaRole.Button, new() { Name = "Game logs" }).ClickAsync();
+        return new GameLogListPage(_page);
+    }
     
     public async Task ClickHomeButton()
     {
@@ -42,5 +49,11 @@ public class HomePage
     {
         await ClickHomeButton();
         await ClickBoardGamesButton();
+    }
+
+    public async Task RefreshGameLogsPage()
+    {
+        await ClickHomeButton();
+        await ClickGameLogsButton();
     }
 }

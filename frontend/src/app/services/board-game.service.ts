@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BoardGameService {
-  private baseUrl: string = "http://localhost:5001/api/BoardGame";
+  private baseUrl: string = "/api/BoardGame";
   constructor(private http: HttpClient) {}
 
   addBoardGame(boardGame: BoardGame): Observable<object> {

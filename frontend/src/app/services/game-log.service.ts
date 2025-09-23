@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GameLogService {
-  private baseUrl: string = "http://localhost:5001/api/GameLog";
+  private baseUrl: string = "/api/GameLog";
   constructor(private http: HttpClient) {}
 
   addGameLog(gameLog: GameLog): Observable<object> {
@@ -32,5 +32,9 @@ export class GameLogService {
 
   getGameLogs(): Observable<GameLog[]>{
     return this.http.get<GameLog[]>(`${this.baseUrl}`);
+  }
+
+  getGameLogsByBoardGameId(boardGameId: string): Observable<GameLog[]>{
+    return this.http.get<GameLog[]>(`${this.baseUrl}/byBoardGame/${boardGameId}`);
   }
 }

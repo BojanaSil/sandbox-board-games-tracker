@@ -87,6 +87,13 @@ public class ApiBoardGameDriver : IBoardGameDriver
         var a = await _httpClient.SendAsync(_request);
     }
 
+    public Task CancelUpdate()
+    {
+        _request = new HttpRequestMessage();
+
+        return Task.CompletedTask;
+    }
+
     public async Task RefreshBoardGames()
     {
         var responseMessage = await _httpClient.SendAsync(new HttpRequestMessage
@@ -121,11 +128,16 @@ public class ApiBoardGameDriver : IBoardGameDriver
     public async Task DeleteBoardGame(string name)
     {
         var id = _boardGameModels.Find(e => e.Name == name).Id;
-        
+
         await _httpClient.SendAsync(new HttpRequestMessage
         {
             RequestUri = new Uri(_url + $"/{id}"),
             Method = HttpMethod.Delete
         });
+    }
+
+    public Task AssertFieldIsNotEditable(string boardGame, string fieldName)
+    {
+        return Task.CompletedTask;
     }
 }
