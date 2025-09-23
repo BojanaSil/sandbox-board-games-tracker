@@ -77,3 +77,8 @@ Use cases for this project:
 ## Manual testing
 Setup application locally following [this guide](/DOCKER-SETUP-GUIDE.md)
 Manual testing available in [this file](/MANUAL-TESTING-GUIDE.md)
+
+## Team roles
+- Developers are responsible for developing and maintaining tests and Page Object Model (POM) objects.
+- Developers should ensure the tests are passing. If tests are not passing, they are responsible for fixing tests or implementation
+- QA engineers should write test scenarios that would be guidelines for developers when writing tests
